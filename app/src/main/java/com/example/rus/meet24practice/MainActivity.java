@@ -7,7 +7,15 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.ChangeBounds;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Scene;
+import android.transition.TransitionManager;
+import android.transition.TransitionSet;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
@@ -33,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView7;
     ImageView imageView8;
     private ObjectAnimator objectAnimator;
+    private int position = 1;
+    private Scene sceneA;
+    private Scene sceneB;
+    private Scene sceneC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +186,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
+        //Transition Animation
+        ViewGroup sceneRoot = (ViewGroup)findViewById(R.id.root_scene);
+        sceneA = Scene.getSceneForLayout(sceneRoot, R.layout.scene_a,this);
+        sceneB = Scene.getSceneForLayout(sceneRoot, R.layout.scene_b,this);
+        sceneC = Scene.getSceneForLayout(sceneRoot, R.layout.scene_c,this);
 
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -191,5 +207,14 @@ public class MainActivity extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         animationDrawable.stop();
+    }
+    public void goToB(View view){
+        TransitionManager.go(sceneB);
+    }
+    public void goToA(View view){
+        TransitionManager.go(sceneA);
+    }
+    public void goToC(View view){
+        TransitionManager.go(sceneC);
     }
 }
